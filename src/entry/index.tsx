@@ -12,6 +12,7 @@ import { PortalHost } from "@/components/base/portal";
 import globalStyle from "@/constants/globalStyle";
 import Theme from "@/core/theme";
 import { BootstrapComponent } from "./bootstrap/BootstrapComponent";
+import SplashScreen from "@/components/SplashScreen";
 import { ToastBaseComponent } from "@/components/base/toast";
 import { StatusBar } from "react-native";
 import { ReduceMotion, ReducedMotionConfig } from "react-native-reanimated";
@@ -29,6 +30,12 @@ bootstrap();
 const Stack = createNativeStackNavigator<any>();
 
 export default function Pages() {
+    const [showSplash, setShowSplash] = React.useState(true);
+
+    if (showSplash) {
+        return <SplashScreen onFinish={() => setShowSplash(false)} />;
+    }
+
     const theme = Theme.useTheme();
 
     return (

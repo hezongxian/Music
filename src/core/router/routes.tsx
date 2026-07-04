@@ -1,7 +1,5 @@
 import Home from "@/pages/home";
 import MusicDetail from "@/pages/musicDetail";
-import TopList from "@/pages/topList";
-import TopListDetail from "@/pages/topListDetail";
 import SearchPage from "@/pages/searchPage";
 import SheetDetail from "@/pages/sheetDetail";
 import AlbumDetail from "@/pages/albumDetail";
@@ -12,8 +10,6 @@ import Downloading from "@/pages/downloading";
 import SearchMusicList from "@/pages/searchMusicList";
 import MusicListEditor from "@/pages/musicListEditor";
 import FileSelector from "@/pages/fileSelector";
-import RecommendSheets from "@/pages/recommendSheets";
-import PluginSheetDetail from "@/pages/pluginSheetDetail";
 import History from "@/pages/history";
 import SetCustomTheme from "@/pages/setCustomTheme";
 import Permissions from "@/pages/permissions";
@@ -37,14 +33,8 @@ export const routes: Array<IRoutes> = [
         path: ROUTE_PATH.MUSIC_DETAIL,
         component: MusicDetail,
     },
-    {
-        path: ROUTE_PATH.TOP_LIST,
-        component: TopList,
-    },
-    {
-        path: ROUTE_PATH.TOP_LIST_DETAIL,
-        component: TopListDetail,
-    },
+    
+    
     {
         path: ROUTE_PATH.SEARCH_PAGE,
         component: SearchPage,
@@ -85,14 +75,8 @@ export const routes: Array<IRoutes> = [
         path: ROUTE_PATH.FILE_SELECTOR,
         component: FileSelector,
     },
-    {
-        path: ROUTE_PATH.RECOMMEND_SHEETS,
-        component: RecommendSheets,
-    },
-    {
-        path: ROUTE_PATH.PLUGIN_SHEET_DETAIL,
-        component: PluginSheetDetail,
-    },
+    
+    
     {
         path: ROUTE_PATH.HISTORY,
         component: History,

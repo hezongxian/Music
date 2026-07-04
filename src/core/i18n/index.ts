@@ -3,22 +3,12 @@ import { atom, getDefaultStore, useAtomValue } from "jotai";
 import PersistStatus from "@/utils/persistStatus";
 
 import zhCN from "./languages/zh-cn.json";
-import enUS from "./languages/en-us.json";
-import zhTW from "./languages/zh-tw.json";
 
 
 const allLanguages: ILanguage[] = [{
     locale: "zh-CN",
     name: "简体中文",
     languageData: zhCN,
-}, {
-    locale: "zh-TW",
-    name: "繁体中文",
-    languageData: zhTW,
-}, {
-    locale: "en-US",
-    name: "English",
-    languageData: enUS,
 }];
 
 const defaultLocale = PersistStatus.get("app.language") || "zh-CN";
@@ -62,7 +52,7 @@ const i18n = new I18N();
 export default i18n;
 
 export function useI18N(): I18N<keyof ILanguageData> {
-    useAtomValue(currentLanguageAtom); // 用来通知组件刷新
+    useAtomValue(currentLanguageAtom);
 
     return i18n;
 }

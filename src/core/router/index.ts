@@ -21,10 +21,6 @@ export const ROUTE_PATH = {
     /** 歌手页 */
     ARTIST_DETAIL: "artist-detail",
     /** 榜单页 */
-    TOP_LIST: "top-list",
-    /** 榜单详情页 */
-    TOP_LIST_DETAIL: "top-list-detail",
-    /** 设置页 */
     SETTING: "setting",
     /** 本地音乐 */
     LOCAL: "local",
@@ -37,10 +33,6 @@ export const ROUTE_PATH = {
     /** 选择文件夹 */
     FILE_SELECTOR: "file-selector",
     /** 推荐歌单 */
-    RECOMMEND_SHEETS: "recommend-sheets",
-    /** 歌单详情 */
-    PLUGIN_SHEET_DETAIL: "plugin-sheet-detail",
-    /** 历史记录 */
     HISTORY: "history",
     /** 自定义主题 */
     SET_CUSTOM_THEME: "set-custom-theme",
@@ -94,14 +86,8 @@ interface RouterParams extends RouterParamsBase {
         ) => Promise<boolean>; // true会自动关闭，false会停在当前页面
         matchExtension?: (path: string) => boolean;
     };
-    "top-list-detail": {
-        pluginHash: string;
-        topList: IMusic.IMusicSheetItemBase;
-    };
-    "plugin-sheet-detail": {
-        pluginHash?: string;
-        sheetInfo: IMusic.IMusicSheetItemBase;
-    };
+
+
 }
 
 /** 路由参数Hook */

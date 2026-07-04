@@ -8,7 +8,6 @@ import { showPanel } from "@/components/panels/usePanel";
 import { useI18N } from "@/core/i18n";
 import { ROUTE_PATH, useNavigate } from "@/core/router";
 import TrackPlayer from "@/core/trackPlayer";
-import { checkUpdateAndShowResult } from "@/hooks/useCheckUpdate.ts";
 import NativeUtils from "@/native/utils";
 import rpx from "@/utils/rpx";
 import { useScheduleCloseCountDown } from "@/utils/scheduleClose";
@@ -43,13 +42,6 @@ function HomeDrawer(props: any) {
             onPress: () => {
                 navigateToSetting("basic");
             },
-        }, {
-            icon: "javascript",
-            title: t("sidebar.pluginManagement"),
-            onPress: () => {
-                navigateToSetting("plugin");
-            },
-        },
         {
             icon: "t-shirt-outline",
             title: t("sidebar.themeSettings"),
@@ -160,24 +152,6 @@ function HomeDrawer(props: any) {
                             {t("common.software")}
                         </ListItem.ListItemText>
                     </ListItem>
-
-                    <ListItem
-                        withHorizontalPadding
-                        key={"update"}
-                        onPress={() => {
-                            checkUpdateAndShowResult(true);
-                        }}>
-                        <ListItem.ListItemIcon
-                            icon={"arrow-path"}
-                            width={rpx(48)}
-                        />
-                        <ListItem.Content title={t("sidebar.checkUpdate")} />
-                        <ListItem.ListItemText
-                            position="right"
-                            fontSize="subTitle">
-                            {`${t("sidebar.currentVersion")}${deviceInfoModule.getVersion()}`}
-                        </ListItem.ListItemText>
-                    </ListItem>
                     <ListItem
                         withHorizontalPadding
                         key={"about"}
@@ -189,7 +163,7 @@ function HomeDrawer(props: any) {
                             width={rpx(48)}
                         />
                         <ListItem.Content
-                            title={`${t("common.about")} ${deviceInfoModule.getApplicationName()}`}
+                            title={"联系宪哥"}
                         />
                     </ListItem>
                 </View>
