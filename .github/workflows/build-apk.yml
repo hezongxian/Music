@@ -41,7 +41,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build APK
+      
+      - name: Patch expo AGP compatibility
+        run: |
+          find node_modules -path "*/expo-modules-core/android/ExpoModulesCorePlugin.gradle" -exec sed -i 's/from components\.release/from components.findByName("release") ?: components.getByName("debug")/g' {} \;
+        shell: bash
+
+- name: Build APK
         working-directory: android
         run: |
           echo "sdk.dir=${ANDROID_SDK_ROOT}" > local.properties
@@ -60,3 +66,4 @@ jobs:
           name: banban-music-apk
           path: android/app/build/outputs/apk/release/app-release.apk
           retention-days: 30
+
