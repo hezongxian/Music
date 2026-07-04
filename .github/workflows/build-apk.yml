@@ -47,7 +47,7 @@ jobs:
       - name: Fix dom-webview build.gradle
         run: |
           find node_modules -path "*/@expo/dom-webview/android/build.gradle" | while read f; do
-            sed -i "/id 'expo-module-gradle-plugin'/d" "$f"
+            sed -i "s/id 'expo-module-gradle-plugin'/id 'org.jetbrains.kotlin.android'/" "$f"
             sed -i "/namespace/a\\    compileSdk rootProject.ext.compileSdkVersion\n    buildToolsVersion rootProject.ext.buildToolsVersion" "$f"
             sed -i "/versionCode/a\\        minSdkVersion rootProject.ext.minSdkVersion\n        targetSdkVersion rootProject.ext.targetSdkVersion" "$f"
             cat "$f"
