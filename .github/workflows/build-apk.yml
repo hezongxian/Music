@@ -41,7 +41,7 @@ jobs:
         shell: bash
 
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       
       - name: Fix dom-webview build.gradle
