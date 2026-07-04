@@ -1,4 +1,4 @@
-﻿apply plugin: 'com.android.library'
+apply plugin: 'com.android.library'
 
 group = 'expo.modules.webview'
 version = '57.0.0'
