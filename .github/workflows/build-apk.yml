@@ -68,6 +68,7 @@ jobs:
         run: |
           echo "=== Config ==="
           echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT"
+          export NODE_ENV=production
           echo "sdk.dir=${ANDROID_SDK_ROOT}" > local.properties
           echo "RELEASE_STORE_FILE=../app/banban.keystore" > keystore.properties
           echo "RELEASE_STORE_PASSWORD=banban123" >> keystore.properties

@@ -42,6 +42,7 @@ function HomeDrawer(props: any) {
             onPress: () => {
                 navigateToSetting("basic");
             },
+        },
         {
             icon: "t-shirt-outline",
             title: t("sidebar.themeSettings"),
