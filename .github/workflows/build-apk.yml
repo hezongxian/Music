@@ -36,6 +36,8 @@ jobs:
           sed -i "s|maven.aliyun.com/repository/central|repo1.maven.org/maven2|g" android/build.gradle
           sed -i "s|maven.aliyun.com/repository/public|repo1.maven.org/maven2|g" android/build.gradle
           sed -i "s|maven.aliyun.com/repository/gradle-plugin|plugins.gradle.org/m2|g" android/build.gradle
+          echo "=== android/build.gradle mirrors ==="
+          grep -n "maven" android/build.gradle || true
         shell: bash
 
       - name: Install dependencies
@@ -43,12 +45,18 @@ jobs:
 
       - name: Patch expo AGP compatibility
         run: |
+          echo "=== Patching ExpoModulesCorePlugin.gradle ==="
           find node_modules -path "*/expo-modules-core/android/ExpoModulesCorePlugin.gradle" -exec sed -i 's/components\.release/components.findByName("release") ?: components.getByName("debug")/g' {} \;
+          echo "=== Checking expo-modules-autolinking ==="
+          ls -la node_modules/expo-modules-autolinking 2>/dev/null || echo "NOT FOUND symlink"
+          ls -la node_modules/.pnpm/expo-modules-autolinking*/node_modules/expo-modules-autolinking 2>/dev/null || echo "NOT FOUND in pnpm"
         shell: bash
 
       - name: Build APK
         working-directory: android
         run: |
+          echo "=== Config ==="
+          echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT"
           echo "sdk.dir=${ANDROID_SDK_ROOT}" > local.properties
           echo "RELEASE_STORE_FILE=../app/banban.keystore" > keystore.properties
           echo "RELEASE_STORE_PASSWORD=banban123" >> keystore.properties
@@ -56,7 +64,10 @@ jobs:
           echo "RELEASE_KEY_PASSWORD=banban123" >> keystore.properties
           echo "org.gradle.jvmargs=-Xmx4096m" >> gradle.properties
           chmod +x gradlew
-          ./gradlew assembleRelease --no-daemon
+          echo "=== Starting Gradle ==="
+          ./gradlew assembleRelease --no-daemon --stacktrace 2>&1 || true
+          echo "=== Build exit code: $? ==="
+          ls -la app/build/outputs/apk/release/ 2>/dev/null || echo "No APK output"
         shell: bash
 
       - name: Upload APK
