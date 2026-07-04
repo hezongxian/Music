@@ -65,12 +65,13 @@ jobs:
           echo "org.gradle.jvmargs=-Xmx4096m" >> gradle.properties
           chmod +x gradlew
           echo "=== Starting Gradle ==="
-          ./gradlew assembleRelease --no-daemon --stacktrace 2>&1 || true
+          ./gradlew assembleRelease --no-daemon --stacktrace 2>&1
           echo "=== Build exit code: $? ==="
           ls -la app/build/outputs/apk/release/ 2>/dev/null || echo "No APK output"
         shell: bash
 
       - name: Upload APK
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: banban-music-apk
