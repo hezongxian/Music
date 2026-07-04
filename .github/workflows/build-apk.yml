@@ -44,11 +44,13 @@ jobs:
         run: pnpm install --no-frozen-lockfile
 
       
-      - name: Fix dom-webview missing plugin
+      - name: Fix dom-webview build.gradle
         run: |
           find node_modules -path "*/@expo/dom-webview/android/build.gradle" | while read f; do
             sed -i "/id 'expo-module-gradle-plugin'/d" "$f"
-            echo "Fixed: $f"
+            sed -i "/namespace/a\\    compileSdk rootProject.ext.compileSdkVersion\n    buildToolsVersion rootProject.ext.buildToolsVersion" "$f"
+            sed -i "/versionCode/a\\        minSdkVersion rootProject.ext.minSdkVersion\n        targetSdkVersion rootProject.ext.targetSdkVersion" "$f"
+            cat "$f"
           done
         shell: bash
 
