@@ -43,6 +43,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
+      
+      - name: Fix dom-webview missing plugin
+        run: |
+          find node_modules -path "*/@expo/dom-webview/android/build.gradle" | while read f; do
+            sed -i "/id 'expo-module-gradle-plugin'/d" "$f"
+            echo "Fixed: $f"
+          done
+        shell: bash
+
       - name: Patch expo AGP compatibility
         run: |
           echo "=== Patching ExpoModulesCorePlugin.gradle ==="
