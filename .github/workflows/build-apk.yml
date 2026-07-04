@@ -61,6 +61,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: banban-music-apk
-          path: android/app/build/outputs/apk/release/app-release.apk
+          name: banban-music-apk-${{ github.run_number }}
+          path: android/app/build/outputs/apk/**/*.apk
           retention-days: 30
