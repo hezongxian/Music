@@ -8,7 +8,6 @@ apply from: expoModulesCorePlugin
 applyKotlinExpoModulesCorePlugin()
 useCoreDependencies()
 useDefaultAndroidSdkVersions()
-useExpoPublishing()
 
 android {
   namespace "expo.modules.webview"

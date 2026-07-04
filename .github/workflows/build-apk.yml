@@ -44,13 +44,24 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       
-      - name: Fix dom-webview build.gradle
+      - name: Disable dom-webview module (version incompatible)
         run: |
-          find node_modules -path "*/@expo/dom-webview/android/build.gradle" | while read f; do
+          # Remove android platform support so autolinking skips it
+          find node_modules -path "*/@expo/dom-webview/expo-module.config.json" | while read f; do
             echo "Patching: $f"
-            cp android/dom-webview-build.gradle "$f"
+            python3 -c "
+import json
+with open('$f', 'r') as fp:
+    cfg = json.load(fp)
+cfg['platforms'] = ['apple']  # remove android
+with open('$f', 'w') as fp:
+    json.dump(cfg, fp, indent=2)
+"
             cat "$f"
           done
+          # Also remove the build.gradle to be safe
+          find node_modules -path "*/@expo/dom-webview/android" -type d -exec rm -rf {} + 2>/dev/null || true
+          echo "dom-webview android directory removed"
         shell: bash
 
       - name: Patch expo AGP compatibility
