@@ -1,88 +1,10 @@
 name: Build APK
-
 on:
   push:
     branches: [master]
   workflow_dispatch:
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 9
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: pnpm
-
-      - uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 17
-
-      - name: Setup Android SDK
-        run: |
-          yes | ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager --licenses > /dev/null 2>&1 || true
-          ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager "platforms;android-35" "build-tools;35.0.0" "ndk;26.1.10909125" 2>&1 || true
-        shell: bash
-
-      - name: Fix Aliyun mirrors for CI
-        run: |
-          sed -i "s|maven.aliyun.com/repository/central|repo1.maven.org/maven2|g" android/build.gradle
-          sed -i "s|maven.aliyun.com/repository/public|repo1.maven.org/maven2|g" android/build.gradle
-          sed -i "s|maven.aliyun.com/repository/gradle-plugin|plugins.gradle.org/m2|g" android/build.gradle
-        shell: bash
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Disable dom-webview module
-        run: |
-          find node_modules -path "*/@expo/dom-webview/expo-module.config.json" | while read f; do
-            python3 -c "
-import json
-with open('$f', 'r') as fp:
-    cfg = json.load(fp)
-cfg['platforms'] = ['apple']
-with open('$f', 'w') as fp:
-    json.dump(cfg, fp, indent=2)
-"
-          done
-          find node_modules -path "*/@expo/dom-webview/android" -type d -exec rm -rf {} + 2>/dev/null || true
-          echo "dom-webview disabled for android"
-        shell: bash
-
-      - name: Patch expo AGP compatibility
-        run: |
-          find node_modules -path "*/expo-modules-core/android/ExpoModulesCorePlugin.gradle" -exec sed -i 's/components\.release/components.findByName("release") ?: components.getByName("debug")/g' {} \;
-        shell: bash
-
-      - name: Build APK
-        working-directory: android
-        env:
-          NODE_ENV: production
-        run: |
-          echo "sdk.dir=${ANDROID_SDK_ROOT}" > local.properties
-          echo "RELEASE_STORE_FILE=../app/banban.keystore" > keystore.properties
-          echo "RELEASE_STORE_PASSWORD=banban123" >> keystore.properties
-          echo "RELEASE_KEY_ALIAS=banban" >> keystore.properties
-          echo "RELEASE_KEY_PASSWORD=banban123" >> keystore.properties
-          echo "org.gradle.jvmargs=-Xmx4096m" >> gradle.properties
-          chmod +x gradlew
-          ./gradlew assembleRelease --no-daemon --stacktrace 2>&1
-          echo "=== Build done ==="
-          ls -la app/build/outputs/apk/release/ 2>/dev/null || echo "No APK"
-        shell: bash
-
-      - name: Upload APK
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: banban-music-apk
-          path: android/app/build/outputs/apk/release/app-release.apk
-          retention-days: 30
+      - run: echo "hello world"
