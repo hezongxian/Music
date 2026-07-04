@@ -1,9 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">板板music</string>
     <string name="expo_splash_screen_status_bar_translucent">true</string>
-    <!-- rtnp channel id -->
     <string name="rntp_temporary_channel_id">板板music_temporary_channel</string>
-    <!-- rtnp channel name -->
     <string name="rntp_temporary_channel_name">板板music_temporary_channel</string>
     <string name="playback_channel_name">板板music</string>
 </resources>

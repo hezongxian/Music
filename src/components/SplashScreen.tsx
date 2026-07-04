@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { View, StyleSheet, Animated, Dimensions } from "react-native";
+import { StyleSheet, Animated, Dimensions } from "react-native";
 import Svg, { Circle, Ellipse, Path, G, Rect, Defs, LinearGradient, Stop, Text as SvgText } from "react-native-svg";
 
 const { width: SW, height: SH } = Dimensions.get("window");
@@ -20,7 +20,7 @@ export default function SplashScreen({ onFinish }: Props) {
             Animated.timing(fadeAnim, { toValue: 0, duration: 400, useNativeDriver: true }).start(() => onFinish?.());
         }, 2000);
         return () => clearTimeout(t);
-    }, []);
+    }, [fadeAnim, scaleAnim, onFinish]);
 
     return (
         <Animated.View style={[st.container, { opacity: fadeAnim }]}>
@@ -38,10 +38,10 @@ export default function SplashScreen({ onFinish }: Props) {
                     </Defs>
                     <Rect width={SW} height={SH} fill="url(#bg)" />
                     <G opacity={0.3}>
-                        <SvgText x={CX - 130} y={CY - 160} fill="#e94560" fontSize={32} fontWeight="bold">{"♪"}</SvgText>
-                        <SvgText x={CX - 160} y={CY - 80} fill="#ff6b81" fontSize={24}>{"♫"}</SvgText>
-                        <SvgText x={CX + 110} y={CY - 170} fill="#e94560" fontSize={28}>{"♫"}</SvgText>
-                        <SvgText x={CX + 140} y={CY - 70} fill="#ff6b81" fontSize={36} fontWeight="bold">{"♪"}</SvgText>
+                        <SvgText x={CX - 130} y={CY - 160} fill="#e94560" fontSize={32} fontWeight="bold">{"\u266B"}</SvgText>
+                        <SvgText x={CX - 160} y={CY - 80} fill="#ff6b81" fontSize={24}>{"\u266A"}</SvgText>
+                        <SvgText x={CX + 110} y={CY - 170} fill="#e94560" fontSize={28}>{"\u266B"}</SvgText>
+                        <SvgText x={CX + 140} y={CY - 70} fill="#ff6b81" fontSize={36} fontWeight="bold">{"\u266A"}</SvgText>
                     </G>
                     <G>
                         <Ellipse cx={CX} cy={CY + 170} rx={45} ry={55} fill="#2d2d5e" />
@@ -60,8 +60,8 @@ export default function SplashScreen({ onFinish }: Props) {
                         <Rect x={CX - 48} y={CY + 35} width={10} height={20} rx={5} fill="#1a1a2e" />
                         <Rect x={CX + 38} y={CY + 35} width={10} height={20} rx={5} fill="#1a1a2e" />
                     </G>
-                    <SvgText x={CX} y={CY + 270} fill="#e94560" fontSize={36} fontWeight="bold" textAnchor="middle">{"板板music"}</SvgText>
-                    <SvgText x={CX} y={CY + 310} fill="#a0a0c0" fontSize={14} textAnchor="middle">{"享受每一个音符"}</SvgText>
+                    <SvgText x={CX} y={CY + 270} fill="#e94560" fontSize={36} fontWeight="bold" textAnchor="middle">板板music</SvgText>
+                    <SvgText x={CX} y={CY + 310} fill="#a0a0c0" fontSize={14} textAnchor="middle">享受每一个音符</SvgText>
                 </Svg>
             </Animated.View>
         </Animated.View>
