@@ -33,12 +33,18 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Create keystore properties
+        working-directory: android
+        run: |
+          echo "RELEASE_STORE_FILE=../app/banban.keystore" > keystore.properties
+          echo "RELEASE_STORE_PASSWORD=banban123" >> keystore.properties
+          echo "RELEASE_KEY_ALIAS=banban" >> keystore.properties
+          echo "RELEASE_KEY_PASSWORD=banban123" >> keystore.properties
+
       - name: Build APK
         working-directory: android
-        env:
-          ANDROID_HOME: ${{ env.ANDROID_SDK_ROOT }}
         run: |
-          echo "sdk.dir=$ANDROID_SDK_ROOT" > local.properties
+          echo "sdk.dir=$ANDROID_SDK_ROOT" >> local.properties
           echo "org.gradle.jvmargs=-Xmx4096m" >> gradle.properties
           chmod +x gradlew
           ./gradlew assembleRelease
