@@ -33,21 +33,20 @@ jobs:
 
       - name: Fix Aliyun mirrors for CI
         run: |
-          sed -i "s|https://maven.aliyun.com/repository/central|https://repo1.maven.org/maven2|g" android/build.gradle
-          sed -i "s|https://maven.aliyun.com/repository/public|https://repo1.maven.org/maven2|g" android/build.gradle
-          sed -i "s|https://maven.aliyun.com/repository/gradle-plugin|https://plugins.gradle.org/m2|g" android/build.gradle
+          sed -i "s|maven.aliyun.com/repository/central|repo1.maven.org/maven2|g" android/build.gradle
+          sed -i "s|maven.aliyun.com/repository/public|repo1.maven.org/maven2|g" android/build.gradle
+          sed -i "s|maven.aliyun.com/repository/gradle-plugin|plugins.gradle.org/m2|g" android/build.gradle
         shell: bash
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --no-frozen-lockfile
 
-      
       - name: Patch expo AGP compatibility
         run: |
-          find node_modules -path "*/expo-modules-core/android/ExpoModulesCorePlugin.gradle" -exec sed -i 's/from components\.release/from components.findByName("release") ?: components.getByName("debug")/g' {} \;
+          find node_modules -path "*/expo-modules-core/android/ExpoModulesCorePlugin.gradle" -exec sed -i 's/components\.release/components.findByName("release") ?: components.getByName("debug")/g' {} \;
         shell: bash
 
-- name: Build APK
+      - name: Build APK
         working-directory: android
         run: |
           echo "sdk.dir=${ANDROID_SDK_ROOT}" > local.properties
@@ -66,4 +65,3 @@ jobs:
           name: banban-music-apk
           path: android/app/build/outputs/apk/release/app-release.apk
           retention-days: 30
-
